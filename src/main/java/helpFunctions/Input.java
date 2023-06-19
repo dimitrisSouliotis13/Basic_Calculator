@@ -13,7 +13,6 @@ public class Input {
     public void userInput() {
         double[] arrayWithNumbers;
         String userNumber;
-        boolean checkInput = false;
 
         try {
             while (true) {
@@ -29,29 +28,35 @@ public class Input {
 
                     System.out.println(
                             ConsoleColors.BLACK_BACKGROUND + "Enter the " + iName + " number:" + ConsoleColors.RESET);
-//                    userNumber = scanner.next();
 
-                    do {
-                        userNumber = scanner.next();
-                        if (userNumber.matches("[a-zA-Z]+")) {
-                            System.out.println(
-                                    ConsoleColors.RED_BRIGHT + "Write a number not a word!!!" + ConsoleColors.RESET);
-                            checkInput = false;
-                        } else {
-                            checkInput = true;
-                        }
-                    } while (!checkInput);
+                    userNumber = checkInput(scanner.nextLine());
 
                     arrayWithNumbers[i] = Double.parseDouble(userNumber);
                     System.out.println(Arrays.toString(arrayWithNumbers));
                 }
                 double finalValue =
                         chooseWriteAction(arrayWithNumbers[0], arrayWithNumbers[1]);
-                System.out.println(ConsoleColors.RED_BRIGHT + "The final value is: " + finalValue + "." + ConsoleColors.RESET);
+                System.out.println(
+                        ConsoleColors.WHITE_BACKGROUND + "<<< The final value is: " + finalValue + ". >>>" + ConsoleColors.RESET);
             }
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
         }
+    }
+
+    public String checkInput(String userNum) {
+        boolean checkInput = false;
+        do {
+            if (!userNum.matches("^[+-]?\\d+(\\.\\d+)?$")) {
+                System.out.println(
+                        ConsoleColors.RED_BRIGHT + "Write a numbers only!!!" + ConsoleColors.RESET);
+                userNum = scanner.nextLine();
+                checkInput = false;
+            } else {
+                checkInput = true;
+            }
+        } while (!checkInput);
+        return userNum;
     }
 
     public double chooseAction(double x, double y, String action) throws Exception {
