@@ -3,6 +3,7 @@ package helpFunctions;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import ColorFolder.ConsoleColors;
 import entities.Calculator;
 
 public class Input {
@@ -10,13 +11,13 @@ public class Input {
     String action;
 
     public void userInput() {
-
-        int[] numbersArray = new int[2];
-        String userNumber;
+        int[] arrayWithNumbers;
+        int userNumber;
 
         try {
             while (true) {
-                for (int i = 0; i < numbersArray.length; i++) {
+                arrayWithNumbers = new int[2];
+                for (int i = 0; i < arrayWithNumbers.length; i++) {
 
                     String iName;
                     if (i == 0) {
@@ -26,27 +27,34 @@ public class Input {
                     }
 
                     System.out.println("Enter the " + iName + " number:");
-                    userNumber = scanner.nextLine();
+                    userNumber = scanner.nextInt();
+                    //scanner.hasNextInt()
 
-                    if (userNumber.equalsIgnoreCase("exit")) {
-                        System.out.println("Process finished!!");
-                        System.exit(0);
-                    } else {
-                        if (Integer.parseInt(userNumber) > 0) {
-                            int parseStringValue = Integer.parseInt(userNumber);
-                            numbersArray[i] = parseStringValue;
-                            System.out.println(Arrays.toString(numbersArray));
-                        } else {
-
-                        }
-
+                    if (userNumber > 0) {
+                        int parseStringValue = userNumber;
+                        arrayWithNumbers[i] = parseStringValue;
+                        System.out.println(Arrays.toString(arrayWithNumbers));
                     }
                 }
-                chooseWriteAction(numbersArray[0], numbersArray[1]); //TODO
+                double finalValue = chooseWriteAction(arrayWithNumbers[0], arrayWithNumbers[1]);
+                System.out.println(finalValue);
             }
         } catch (Exception exception) {
             System.out.println(exception);
         }
+    }
+
+    public void checkIfUserInputItsCorrect(String value) {
+        boolean isActionValid = true;
+        do {
+            action = scanner.next();
+            if () {
+                isActionValid = false;
+            } else {
+                System.out.println();
+                action = scanner.nextLine();
+            }
+        } while (isActionValid);
     }
 
     public double chooseAction(int x, int y, String action) {
@@ -55,7 +63,7 @@ public class Input {
             return switch (action) {
                 case ("+") -> calculator.add(x, y);
                 case ("-") -> calculator.removal(x, y);
-                case ("*") -> calculator.multi(x, y);
+                case ("*") -> calculator.multiplication(x, y);
                 case ("/") -> calculator.division(x, y);
                 default -> 0;
             };
@@ -68,19 +76,33 @@ public class Input {
     public double chooseWriteAction(int x, int y) {
         boolean isActionValid = true;
         System.out.println("Choose the Action you want (+, -, *, /)");
-        action = scanner.nextLine();
 
         do {
+            action = scanner.next();
             if (action.equals("+") || action.equals("-") ||
                     action.equals("*") || action.equals("/")) {
 
                 isActionValid = false;
             } else {
-                System.out.println("Choose the right Action!!!");
+                System.out.println(ConsoleColors.RED + "Choose the right Action !!!" + ConsoleColors.RESET);
                 action = scanner.nextLine();
             }
         } while (isActionValid);
 
         return chooseAction(x, y, action);
+    }
+
+    //method to check for double
+    public double validDouble(double num) {
+
+        while (true) {
+            try {
+                num = Double.parseDouble(scanner.next());
+                break;
+            } catch (NumberFormatException nfe) {
+                System.out.print(ConsoleColors.RED + "Type only numbers: " + ConsoleColors.RESET);
+            }
+        }
+        return 999;
     }
 }

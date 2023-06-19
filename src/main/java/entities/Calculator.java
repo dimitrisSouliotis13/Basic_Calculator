@@ -39,7 +39,7 @@ public class Calculator {
      * @param y second Number.
      * @return add of two numbers.
      */
-    public double add(int x, int y) {
+    public double add(double x, double y) {
         return x + y;
     }
 
@@ -48,7 +48,7 @@ public class Calculator {
      * @param y second Number.
      * @return removal of two numbers.
      */
-    public double removal(int x, int y) {
+    public double removal(double x, double y) {
         return x - y;
     }
 
@@ -57,7 +57,7 @@ public class Calculator {
      * @param y second Number.
      * @return multiplication of two numbers.
      */
-    public double multi(int x, int y) {
+    public double multiplication(double x, double y) {
         return x * y;
     }
 
@@ -66,7 +66,7 @@ public class Calculator {
      * @param y second Number.
      * @return division of two numbers.
      */
-    public double division(int x, int y) {
-        return (double) (x / y);
+    public double division(double x, double y) {
+        return x / y;
     }
 }
