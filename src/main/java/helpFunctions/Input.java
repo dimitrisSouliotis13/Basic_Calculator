@@ -11,12 +11,13 @@ public class Input {
     String action;
 
     public void userInput() {
-        int[] arrayWithNumbers;
-        int userNumber;
+        double[] arrayWithNumbers;
+        String userNumber;
+        boolean checkInput = false;
 
         try {
             while (true) {
-                arrayWithNumbers = new int[2];
+                arrayWithNumbers = new double[2];
                 for (int i = 0; i < arrayWithNumbers.length; i++) {
 
                     String iName;
@@ -26,27 +27,34 @@ public class Input {
                         iName = "second";
                     }
 
-                    System.out.println(ConsoleColors.BLACK_BACKGROUND + "Enter the " + iName + " number:" + ConsoleColors.RESET);
-                    userNumber = scanner.nextInt();
-                    //scanner.hasNextInt() ///TODO
-                    //checkIfUserInputItsCorrect(userNumber);
+                    System.out.println(
+                            ConsoleColors.BLACK_BACKGROUND + "Enter the " + iName + " number:" + ConsoleColors.RESET);
+//                    userNumber = scanner.next();
 
-                    if (userNumber > 0) {
-                        int parseStringValue = userNumber;
-                        arrayWithNumbers[i] = parseStringValue;
-                        System.out.println(Arrays.toString(arrayWithNumbers));
-                    }
+                    do {
+                        userNumber = scanner.next();
+                        if (userNumber.matches("[a-zA-Z]+")) {
+                            System.out.println(
+                                    ConsoleColors.RED_BRIGHT + "Write a number not a word!!!" + ConsoleColors.RESET);
+                            checkInput = false;
+                        } else {
+                            checkInput = true;
+                        }
+                    } while (!checkInput);
+
+                    arrayWithNumbers[i] = Double.parseDouble(userNumber);
+                    System.out.println(Arrays.toString(arrayWithNumbers));
                 }
                 double finalValue =
                         chooseWriteAction(arrayWithNumbers[0], arrayWithNumbers[1]);
-                System.out.println(ConsoleColors.RED_BRIGHT + finalValue + ConsoleColors.RESET);
+                System.out.println(ConsoleColors.RED_BRIGHT + "The final value is: " + finalValue + "." + ConsoleColors.RESET);
             }
         } catch (Exception exception) {
-            System.out.println(exception);
+            System.out.println(exception.getMessage());
         }
     }
 
-    public double chooseAction(int x, int y, String action) throws Exception {
+    public double chooseAction(double x, double y, String action) throws Exception {
         Calculator calculator = new Calculator();
 
         return switch (action) {
@@ -58,9 +66,10 @@ public class Input {
         };
     }
 
-    public double chooseWriteAction(int x, int y) throws Exception {
+    public double chooseWriteAction(double x, double y) throws Exception {
         boolean isActionValid = true;
-        System.out.println(ConsoleColors.BLACK_BACKGROUND + "Choose Action (+, -, *, /)" + ConsoleColors.RESET);
+        System.out.println(
+                ConsoleColors.BLACK_BACKGROUND + "Choose Action (+, -, *, /)" + ConsoleColors.RESET);
 
         do {
             action = scanner.next();
@@ -69,7 +78,8 @@ public class Input {
 
                 isActionValid = false;
             } else {
-                System.out.println(ConsoleColors.RED + "Choose the right Action !!!" + ConsoleColors.RESET);
+                System.out.println(
+                        ConsoleColors.RED + "Choose the right Action !!!" + ConsoleColors.RESET);
                 action = scanner.nextLine();
             }
         } while (isActionValid);
