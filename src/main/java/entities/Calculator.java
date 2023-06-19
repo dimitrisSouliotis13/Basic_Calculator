@@ -4,20 +4,6 @@ public class Calculator {
     private int xNumber;
     private int yNumber;
 
-    /**
-     * Constructor noValues.
-     */
-    public Calculator() {
-    }
-
-    /**
-     * Constructor withValues.
-     */
-    public Calculator(int x, int y) {
-        this.xNumber = x;
-        this.yNumber = y;
-    }
-
     public int getXNumber() {
         return xNumber;
     }

@@ -26,9 +26,10 @@ public class Input {
                         iName = "second";
                     }
 
-                    System.out.println("Enter the " + iName + " number:");
+                    System.out.println(ConsoleColors.BLACK_BACKGROUND + "Enter the " + iName + " number:" + ConsoleColors.RESET);
                     userNumber = scanner.nextInt();
-                    //scanner.hasNextInt()
+                    //scanner.hasNextInt() ///TODO
+                    //checkIfUserInputItsCorrect(userNumber);
 
                     if (userNumber > 0) {
                         int parseStringValue = userNumber;
@@ -36,46 +37,30 @@ public class Input {
                         System.out.println(Arrays.toString(arrayWithNumbers));
                     }
                 }
-                double finalValue = chooseWriteAction(arrayWithNumbers[0], arrayWithNumbers[1]);
-                System.out.println(finalValue);
+                double finalValue =
+                        chooseWriteAction(arrayWithNumbers[0], arrayWithNumbers[1]);
+                System.out.println(ConsoleColors.RED_BRIGHT + finalValue + ConsoleColors.RESET);
             }
         } catch (Exception exception) {
             System.out.println(exception);
         }
     }
 
-    public void checkIfUserInputItsCorrect(String value) {
-        boolean isActionValid = true;
-        do {
-            action = scanner.next();
-            if () {
-                isActionValid = false;
-            } else {
-                System.out.println();
-                action = scanner.nextLine();
-            }
-        } while (isActionValid);
-    }
-
-    public double chooseAction(int x, int y, String action) {
+    public double chooseAction(int x, int y, String action) throws Exception {
         Calculator calculator = new Calculator();
-        try {
-            return switch (action) {
-                case ("+") -> calculator.add(x, y);
-                case ("-") -> calculator.removal(x, y);
-                case ("*") -> calculator.multiplication(x, y);
-                case ("/") -> calculator.division(x, y);
-                default -> 0;
-            };
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-        return 0;
+
+        return switch (action) {
+            case ("+") -> calculator.add(x, y);
+            case ("-") -> calculator.removal(x, y);
+            case ("*") -> calculator.multiplication(x, y);
+            case ("/") -> calculator.division(x, y);
+            default -> throw new Exception(ConsoleColors.RED + "Invalid Action!!!" + ConsoleColors.RESET);
+        };
     }
 
-    public double chooseWriteAction(int x, int y) {
+    public double chooseWriteAction(int x, int y) throws Exception {
         boolean isActionValid = true;
-        System.out.println("Choose the Action you want (+, -, *, /)");
+        System.out.println(ConsoleColors.BLACK_BACKGROUND + "Choose Action (+, -, *, /)" + ConsoleColors.RESET);
 
         do {
             action = scanner.next();
@@ -90,19 +75,5 @@ public class Input {
         } while (isActionValid);
 
         return chooseAction(x, y, action);
-    }
-
-    //method to check for double
-    public double validDouble(double num) {
-
-        while (true) {
-            try {
-                num = Double.parseDouble(scanner.next());
-                break;
-            } catch (NumberFormatException nfe) {
-                System.out.print(ConsoleColors.RED + "Type only numbers: " + ConsoleColors.RESET);
-            }
-        }
-        return 999;
     }
 }
