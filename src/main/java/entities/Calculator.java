@@ -55,4 +55,9 @@ public class Calculator {
     public double division(double x, double y) {
         return x / y;
     }
+
+    public double fetchTheSquareOfNumber(double number, double exponent) {
+        double result = Math.pow(number, exponent);
+        return result;
+    }
 }
